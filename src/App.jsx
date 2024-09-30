@@ -18,9 +18,14 @@ function App() {
   },[])
   useEffect(() => {
     async function git() {
-      const res = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${search}`);      
-      const data = await res.json();
-      setIsGift(data?.data[0]?.images.original.url)
+      try {
+        const res = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${API_KEY}&q=${search}`);      
+        const data = await res.json();
+        setIsGift(data?.data[0]?.images.original.url)
+
+      } catch (err) {
+        console.Error(`Fallo al traer fetch GIF: ${err}`)
+      }
     }
     git();
   } ,[search])
